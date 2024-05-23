@@ -1,0 +1,123 @@
+﻿* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+
+.containerr {
+    display: flex;
+    width: 90%;
+    max-width: 1500px;
+    margin: 20px;
+}
+
+.sidebar {
+    width: 20%;
+    padding: 20px;
+    background-color: #fff;
+    border-right: 1px solid #ddd;
+}
+
+.search-bar {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 20px;
+}
+
+.search-bar input {
+
+    padding: 5px;
+    border: 1px solid #ddd;
+}
+
+.search-bar button {
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.sidebar-nav a {
+    display: block;
+    margin-bottom: 10px;
+    text-decoration: none;
+    color: #333;
+    padding: 5px 0;
+}
+
+.content {
+    width: 100%;
+    padding: 20px;
+}
+
+.section {
+    margin-bottom: 40px;
+}
+
+.section h2 {
+    margin-bottom: 20px;
+}
+
+.product-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.product-item {
+    background-color: #fff;
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+@media (min-width: 1200px) {
+    .product-item {
+    min-width:250px
+    }
+    }
+    .image-placeholder {
+        width: 100%;
+        height: 150px;
+        background-color: #ccc;
+        margin-bottom: 10px;
+    }
+
+    button {
+        padding: 10px 20px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        cursor: pointer;
+    }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+    .pagination {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin-top: 20px;
+    }
+
+
+        .pagination button, .pagination span {
+            margin: 0 5px;
+            padding: 5px 10px;
+        }
+
+        .pagination button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+
+            .pagination button:hover {
+                background-color: #0056b3;
+            }
+
+        .pagination span {
+            cursor: default;
+        }

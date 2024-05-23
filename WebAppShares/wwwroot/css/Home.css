@@ -1,0 +1,146 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.search-bar {
+    display: flex;
+    flex-grow: 1;
+    max-width: 300px;
+    margin: 0 20px;
+}
+
+    .search-bar input {
+        width: 100%;
+        padding: 5px;
+    }
+
+    .search-bar button {
+        padding: 5px 10px;
+        cursor: pointer;
+    }
+
+.nav-menu a {
+    margin: 0 10px;
+    text-decoration: none;
+    color: #333;
+}
+
+.header-section {
+    background-color: #f1f1f1;
+    padding: 20px;
+}
+
+.header-content {
+    display: flex;
+    justify-content: space-around;
+}
+
+.header-item {
+    text-align: center;
+}
+
+
+.carousel-section {
+    display: flex;
+    align-items: center;
+    padding: 20px;
+}
+
+.carousel-button {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.carousel-content {
+    text-align: center;
+    flex-grow: 1;
+}
+
+.catalog-section {
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.catalog-section h2 {
+    margin-bottom: 20px;
+}
+
+.catalog-content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+.catalog-item {
+    width: 30%;
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.about-section {
+    padding: 20px;
+}
+
+.about-section h2 {
+    margin-bottom: 10px;
+}
+
+.catalog-section .content-home .section .product-item {
+}
+
+.catalog-section .content-home .section .product-grid {
+    display: flex;
+    justify-content: center;
+}
+
+.content-home {
+    padding: 20px;
+ 
+}
+
+.text-home-catalog{
+    text-align:left;
+    margin-bottom:10px;
+
+}
+
+/*
+    .carousel-caption {
+        color: #000;
+        transition: color 0.3s;
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        padding: 20px;
+  
+    }
+
+        .carousel-caption:hover {
+            color: #fff;
+            background-color: rgba(0, 0, 0, 0.5);
+        }
+        */
+
+.carousel-control-prev:hover, .carousel-control-next:hover {
+    background-color: transparent !important;
+}

@@ -1,0 +1,12 @@
+﻿@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, WebAppShares
+@using WebAppShares.Views.Shared.Component.SearchBar
+@model Spager
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="@Model.Controller" asp-action="@Model.Action">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Пошук" value="@Model.SearchText" />
+            <input class="p-1 m-lg-2 btn btn-sm btn-info" type="submit" value="Пошук" />
+        </span>
+    </form>
+</div>

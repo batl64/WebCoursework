@@ -1,0 +1,101 @@
+﻿@page
+@model WebAppShares.Pages.Catalog.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, WebAppShares
+@{
+}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Layout</title>
+    <link rel="stylesheet" href="~/css/Catalog.css" />
+</head>
+<body>
+    <div class="containerr">
+        <aside class="sidebar">
+            <form method="get">
+                <div class="search-bar">
+                <label>Назва</label>
+                <input class="form-control" type="text" asp-for="filter.Name" />
+                
+                <label>Мінімальна ціна</label>
+                <input class="form-control" type="number" asp-for="filter.MinPrice" />
+                
+                <label>Максималь на ціна</label>
+                    <input class="form-control" type="number" asp-for="filter.MaxPrice" />     
+    </div>
+                <button type="submit">Пошук <image src="/svg/search.svg" style="width:15px"></image></button>
+            </form>
+        </aside>
+
+        <main class="content">
+            <section class="catalog-section">
+                <div class="content-home">
+                    <section class="section">
+                        <div class="product-grid">
+                            @foreach (var product in Model.Products)
+                            {
+                                <a href="@($"/catalog/product/{product.Id}")" class="product-item">
+                                    @if (product.Image != null)
+                                    {
+                                        <image src="@($"/Products/Product{product.Id}/{product.Image.ImageTitle}")" class="image-placeholder"></image>
+                                    }
+                                    else
+                                    {
+                                        <div class="image-placeholder"></div>
+                                    }
+                                    <p class="text-home-catalog">@product.Name</p>
+                                    @if (product.Discount > 0)
+                                    {
+                                        <div style="display:flex; justify-content: space-between;">
+                                            <div>-@(product.Discount)%</div>
+                                            <p><span style="text-decoration: line-through; margin-right:10px">@product.Price</span><span style="font-weight: 600">@(Math.Round(product.Price * (1 - ((decimal)product.Discount / 100)), 2))</span></p>
+
+                                        </div>
+                                    }
+                                    else
+                                    {
+                                        <div style="text-align:right">@product.Price</div>
+                                    }
+                                </a>
+                            }
+                        </div>
+                    </section>
+                    <div class="container">
+                        @if (Model.TotalPages > 0)
+                        {
+                            <ul class="pagination justify-content-end">
+                                @if ((int)ViewData["CurrentPage"] > 1)
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="1">Перша</a>
+                                    </li>
+                                    <li> <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]-1)">Минула</a></li>
+                                }
+                                @for (var pge = ((int)ViewData["StartPage"]); pge <= ((int)ViewData["EndPage"]); pge++)
+                                {
+                                    <li class="page-item @(pge == (int)ViewData["CurrentPage"]? "active":"")">
+                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@pge">@pge</a>
+                                    </li>
+                                }
+                                @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+                                {
+                                    <li class="page-item">
+                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]+1)">Наступний</a>
+                                    </li>
+                                    <li> <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"])">Минула</a></li>
+                                }
+
+                            </ul>
+                        }
+
+
+                    </div>
+            </section>
+        </main>
+    </div>
+</body>
+</html>

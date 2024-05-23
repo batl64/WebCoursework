@@ -1,0 +1,83 @@
+﻿@page
+@model WebAppShares.Pages.Catalog.BasketModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, WebAppShares
+@{
+}
+
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Корзина</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+    <body>
+        <div class="container-basket" style="display:flex">
+           
+        <div class="cart col-lg-8" style="margin-right:30px">
+            <h2>Корзина</h2>
+            <div>
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>
+                                Картинка
+                            </th>
+                            <th>
+                                Назва
+                            </th>
+                            <th>
+                               Ціна
+                            </th>
+                            <th>Кількість</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+
+                    @foreach (var product in Model.Basket)
+                    {
+                        <tbody>
+                        <td>
+                            <a href="@($"../catalog/product/" )@product.Product.Id"><image src="@($"/Products/Product{product.Product.Id}/{product.Product.Image.ImageTitle}")" class="image-placeholder"></image></a>
+                        </td>
+                        <td style="align-content: center;">
+                            <p>@product.Product.Name</p>
+                        </td>
+                        <td style="align-content: center;">
+                            <p class="item-price"><span style="text-decoration: line-through; margin-right:10px">@product.Product.Price</span><span style="font-weight: 600">@(Math.Round(product.Product.Price * (1 - ((decimal)@product.Product.Discount / 100)), 2))₴</span></p>
+                        </td>
+                        <td style="align-content: center;">
+                            <p class="item-price">@product.Quantity</p>
+                        </td>
+                        <td style="align-content: center;">
+                            <p><a asp-page="./Delete" asp-route-id="@product.Id">Відмінити</a></p>
+                        </td>
+                        </tbody>
+                    }
+
+                </table>
+                
+            </div>
+
+            <div>
+                @if (Model.Basket.Count > 0)
+                {
+                <a class="btn-buy-product"  asp-area="" asp-page="/Catalog/Purchases">Купити все в кошику</a>
+                }
+            </div>
+        </div>
+
+            <div class="checkout-summary col-lg-4">
+                <h2>Рахунок</h2>
+                <ul>
+                <li>Товари <span>@Model.totalPrice</span></li>
+                    <li>ПДВ <span>@Model.tax</span></li>
+                <li class="total">Всього <span>@Model.total</span></li>
+                </ul>
+            </div>
+        </div>
+    </body>
+</html>

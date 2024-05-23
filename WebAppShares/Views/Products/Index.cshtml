@@ -1,0 +1,106 @@
+﻿@model IEnumerable<WebAppShares.Data.Identity.ProductsModel>
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, WebAppShares
+
+@{
+    ViewData["Title"] = "Товари";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Товари</h1>
+
+<p>
+    <a asp-action="Create" style="margin-top:20px" class="btn btn-primary">Створити новий товар</a>
+</p>
+
+<div class="col-4 p-0 justify-content-end">
+    <form asp-controller="Products" asp-action="Index">
+        <span class="btn-group">
+            <input class="form-control" type="text" name="SearchText" placeholder="Пошук" />
+            <input class="p-1 m-lg-2 btn btn-sm btn-info" type="submit" value="Пошук" />
+        </span>
+    </form>
+</div>
+
+<div class="container">
+    @if ((int)ViewData["TotalPages"] > 0)
+    {
+        <ul class="pagination justify-content-end">
+            @if ((int)ViewData["CurrentPage"] > 1)
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-page="1">Перша</a>
+                </li>
+                <li> <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]-1)">Минула</a></li>
+            }
+            @for (var pge = ((int)ViewData["StartPage"]); pge <= ((int)ViewData["EndPage"]);pge++ )
+            {
+                <li class="page-item @(pge == (int)ViewData["CurrentPage"]? "active":"")">
+                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-page="@pge">@pge</a>
+                </li>
+            }
+            @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
+            {
+                <li class="page-item">
+                    <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]+1)">Наступний</a>
+                </li>
+                <li> <a class="page-link" asp-controller="Products" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"])">Минула</a></li>
+            }
+
+        </ul>
+    }
+
+
+</div>
+<table class="table">
+  <thead class="thead-dark">
+        <tr>
+            <th scope="col">
+                Ім'я
+            </th>
+            <th scope="col">
+                Кількість
+            </th>
+            <th scope="col">
+                
+                Опис
+            </th >
+            <th scope="col">
+                Ціна
+            </th>
+            <th scope="col">
+                Знижка
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model) {
+        <tr>
+
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Quantity)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Description)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Price)
+            </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Discount)
+                </td>
+            <td>
+                <a asp-action="Edit" asp-route-id="@item.Id">Редагувати</a> |
+                    <a asp-action="Details" asp-route-id="@item.Id">
+                        Подробиці
+                    </a> |
+                <a asp-action="Delete" asp-route-id="@item.Id">Видалити</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>

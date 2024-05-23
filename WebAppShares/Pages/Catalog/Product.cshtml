@@ -1,0 +1,83 @@
+﻿@page "{id?}"
+@model WebAppShares.Pages.Catalog.ProductModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@addTagHelper *, WebAppShares
+@{
+    ViewData["Title"] = "Product Details";
+}
+
+<!DOCTYPE html>
+
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Details</title>
+    <link rel="stylesheet" href="~/css/Product.css" />
+</head>
+<body>
+    <div class="container-Product">
+        <div class="product-details" style="padding-bottom:50px">
+            <div class="product-image col-lg-6">
+                <image style="max-height:600px" src="@($"/Products/Product{Model.Product.Id}/{Model.Product.Image.ImageTitle}")" class="image-placeholder-product"></image>
+            </div>
+            <form method="post" class="col-lg-6">
+            <div class="product-info">
+                <h1>@Model.Product.Name</h1>
+                    <p><span style="text-decoration: line-through; margin-right:10px">@Model.Product.Price</span><span style="font-weight: 600">@(Math.Round(@Model.Product.Price * (1 - ((decimal)@Model.Product.Discount / 100)), 2))₴</span></p>
+                    <p style="border-top: 1px solid #606060;border-bottom: 1px solid #606060;padding: 5px 5px 20px 0;">@Model.Product.Description</p>
+                   
+             
+                
+                    @if (@Model.Product.Quantity > 0 && !Model.stop)
+                    {
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                    <div class="form-group">
+                        <label asp-for="Quantity" class="control-label">Кількість купуємих речей</label>
+                            <input asp-for="Quantity" class="form-control" max="10" />
+                        <span asp-validation-for="Quantity" class="text-danger"></span>
+                    </div>
+                    <div class="form-group">
+                        <input type="submit" value="Додати до кошика" class="btn btn-primary" />
+                    </div>
+                    }
+                    <div style="display:flex;justify-content:right"><span style="margin-right:20px">Залишилося: </span> @Model.Product.Quantity</div>
+                    }
+                    else{
+                    @if (Model.stop)
+                    {
+                        <div style="display:flex;justify-content:center; font-weight:600; font-size:30px;"><span style="margin-top:20px">Ви уже купили цей товар</span></div>
+                    }
+                    else{
+                        <div style="display:flex;justify-content:center; font-weight:600; font-size:30px;"><span style="margin-top:20px">Все розпродано</span></div>
+                    
+                    }
+                    <div asp-validation-summary="ModelOnly" class="text-danger" role="alert"></div>
+                    }
+            </div>
+            </form>
+        </div>
+        <div class="related-products">
+            <h2>Інші товари</h2>
+            <div class="product-grid" style="padding-bottom:30px">
+                @foreach (var product in Model.ProductsListRec)
+                {
+                    <div class="product-item" style="padding-bottom:30px">
+                        @if (product.Image != null)
+                        {
+                            <image src="@($"/Products/Product{product.Id}/{product.Image.ImageTitle}")" class="image-placeholder"></image>
+                        }
+                        else
+                        {
+                            <div class="image-placeholder"></div>
+                        }
+                        <p>@product.Name</p>
+                        <a class="btn-buy-product" href="@($"/catalog/product/{product.Id}")">Купити</a>
+                    </div>
+                }
+            </div>
+        </div>
+    </div>
+</body>
+</html>

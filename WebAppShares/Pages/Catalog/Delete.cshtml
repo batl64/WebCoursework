@@ -1,0 +1,43 @@
+﻿@page
+@model WebAppShares.Pages.Catalog.DeleteModel
+
+@{
+    ViewData["Title"] = "Видалення";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Видалення</h1>
+
+<h3>
+    Ви впевнені, що хочете видалити це?
+</h3>
+<div>
+    <h4>BuyProduct</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Назва
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model._Basket.Product.Name)
+        </dd>
+        <dt class="col-sm-2">
+            Опис
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model._Basket.Product.Description)
+        </dd>
+        <dt class="col-sm-2">
+           Ціна
+        </dt>
+        <dd class="col-sm-10">
+            <span style="text-decoration: line-through; margin-right:10px">@Model._Basket.Product.Price</span><span style="font-weight: 600">@(Math.Round(@Model._Basket.Product.Price * (1 - ((decimal)@Model._Basket.Product.Discount / 100)), 2))₴</span>
+        </dd>
+    </dl>
+    
+    <form method="post">
+        <input type="hidden" asp-for="_Basket.Id" />
+        <input type="submit" value="Delete" class="btn btn-danger" /> |
+        <a asp-page="./basket">Повернутися назад</a>
+    </form>
+</div>

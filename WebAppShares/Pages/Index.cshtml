@@ -1,0 +1,96 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="~/css/Home.css" />
+    <link rel="stylesheet" href="~/css/Catalog.css" />
+</head>
+<body>
+
+    <div style="margin-top:100px; height:550px" id="carouselExampleDark" class="carousel carousel-dark slide">
+        <div class="carousel-indicators">
+            @for (var i = 0; i < Model.Products.Count; i++)
+            {
+                <button type="button" data-bs-target="#carouselExampleDark" data-bs-slide-to="@i" @(i == 0 ? "class=active" : "") aria-label="Slide @(i + 1)"></button>
+            }
+        </div>
+        <div class="carousel-inner">
+            @foreach (var product in Model.Products)
+            {
+                <div  style="max-height:500px" class="carousel-item @(product == Model.Products.First() ? "active" : "")">
+                    <a style=" display:flex; justify-content:center;" href="@($"/catalog/product/{product.Id}")"> <img src="@($"/Products/Product{product.Id}/{product.Image.ImageTitle}")" style="max-height:500px;" /></a>
+                   <!--<a href="#"></a> <div class="carousel-caption d-none d-md-block">
+                        <h5><span>@product.Name</span></h5>
+                        <p>@product.Description</p>
+                    </div>
+                    -->
+                </div>
+            }
+        </div>
+        <button  class="carousel-control-prev" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Previous</span>
+        </button>
+        <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleDark" data-bs-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="visually-hidden">Next</span>
+        </button>
+    </div>
+
+
+    <section class="catalog-section" style="margin-top:60px">
+        <h2 style="text-align:right;"><a href="/catalog">Каталог</a></h2>
+        <div class="content-home">
+            <section class="section">
+                <div class="product-grid">
+                    @foreach (var product in Model.Products)
+                    {
+                        <a href="@($"/catalog/product/{product.Id}")" class="product-item">
+                            @if (product.Image != null)
+                            {
+                                <image src="@($"/Products/Product{product.Id}/{product.Image.ImageTitle}")" class="image-placeholder"></image>
+                            }
+                            else
+                            {
+                                <div class="image-placeholder"></div>
+                            }
+                            <p class="text-home-catalog">@product.Name</p>
+                            @if(product.Discount >0){
+                            <div style="display:flex; justify-content: space-between;">
+                                <div>-@(product.Discount)%</div>
+                                <p><span style="text-decoration: line-through; margin-right:10px">@product.Price</span><span style="font-weight: 600">@(Math.Round(product.Price * (1 - ((decimal)product.Discount / 100)), 2))</span></p>
+
+                            </div>
+                            }
+                            else
+                            {
+                                <div style="text-align:right">@product.Price</div>
+                            }
+                        </a>
+                    }
+                </div>
+            </section>
+        </div>
+    </section>
+
+    <!--
+    <section class="about-section">
+        <h2>Про нас</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean tincidunt arcu ut urna mollis, in tempor nulla posuere.
+            Mauris ultricies erat ac sem elementum, sed interdum lacus pellentesque. Integer varius erat in orci pretium, nec dapibus 
+            leo sodales. Fusce eget nisl justo. Maecenas dictum, magna non hendrerit ultricies, arcu elit volutpat tortor, et rutrum 
+            metus est non mauris. Donec ac tincidunt urna. Vestibulum nec orci et arcu tincidunt cursus. Nulla vestibulum, est a 
+            aliquam sollicitudin, risus nulla facilisis libero, et tempus nunc magna vel ex. Aenean blandit nunc id varius malesuada.
+        </p>
+    </section>
+    -->
+</body>
+</html>

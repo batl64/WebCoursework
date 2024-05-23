@@ -1,0 +1,26 @@
+﻿@page
+@model UsersModel
+
+<h1>Users</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Email Confirmed</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var user in Model.Users)
+        {
+            <tr>
+                <td>@user.Id</td>
+                <td>@user.UserName</td>
+                <td>@user.Email</td>
+                <td>@(user.EmailConfirmed ? "Yes" : "No")</td>
+            </tr>
+        }
+    </tbody>
+</table>

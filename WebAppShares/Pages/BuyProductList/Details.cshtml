@@ -1,0 +1,88 @@
+﻿@page
+@model WebAppShares.Pages.BuyProductList.DetailsModel
+
+@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Pages/Shared/_Layout.cshtml";
+}
+
+<h1>Details</h1>
+
+<div>
+    <h4>BuyProduct</h4>
+    <hr />
+    <dl class="row">
+        <dt class="col-sm-2">
+            Ім'я
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BuyProduct.FirstName)
+        </dd>
+        <dt class="col-sm-2">
+           Прізвище
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BuyProduct.LastName)
+        </dd>
+        <dt class="col-sm-2">
+            Електрона пошта
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BuyProduct.Email)
+        </dd>
+        <dt class="col-sm-2">
+            Адреса
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BuyProduct.Adress)
+        </dd>
+        <dt class="col-sm-2">
+        Номер телефону
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BuyProduct.phoneNumber)
+        </dd>
+        <dt class="col-sm-2">
+        Загальна сума
+        </dt>
+        <dd class="col-sm-10">
+            @Html.DisplayFor(model => model.BuyProduct.totalSum)
+        </dd>
+    </dl>
+</div>
+<div>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.BuyProductList[0].ProductsModelValue.Name)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BuyProductList[0].ProductsModelValue.Price)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.BuyProductList[0].Quantity)
+                </th>
+            </tr>
+        </thead>
+      
+            @foreach (var item in Model.BuyProductList)
+            {
+            <tbody>
+                <td>
+                        @Html.DisplayFor(modelItem => item.ProductsModelValue.Name)
+                </td>
+                <td>
+                        @item.ProductsModelValue.Price @(Math.Round(item.ProductsModelValue.Price * (1 - ((decimal)item.ProductsModelValue.Discount / 100)), 2))
+                </td>
+                <td>
+                        @Html.DisplayFor(modelItem => item.Quantity)
+                </td>
+            </tbody>
+            }
+     
+    </table>
+</div>
+<div>
+    <a asp-page="./Index">Повернутися назад</a>
+</div>
