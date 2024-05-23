@@ -46,7 +46,7 @@ namespace WebAppShares.Pages.Catalog
         public int EndPage { get; set; }
 
 
-        public async Task OnGetAsync(string SearchText = "", int? page = 1)
+        public async Task OnGetAsync([FromQuery] ProductFilter filter, [FromQuery] int page = 1)
         {
             if (page == null || page < 1)
             {
@@ -54,6 +54,26 @@ namespace WebAppShares.Pages.Catalog
             }
 
             var products = _productService.GetProducts();
+
+
+    
+          
+            if (!string.IsNullOrEmpty(filter.Name))
+            {
+                products = products.Where(p => p.Name.Contains(filter.Name));
+            }
+
+            if (filter.MinPrice.HasValue)
+            {
+                products = products
+                    .Where(p => (Math.Round(p.Price * (1 - ((decimal)p.Discount / 100)), 2)) >= filter.MinPrice.Value);
+            }
+
+            if (filter.MaxPrice.HasValue)
+            {
+                products = products
+                    .Where(p => (Math.Round(p.Price * (1 - ((decimal)p.Discount / 100)), 2)) <= filter.MaxPrice.Value);
+            }
 
             if (products == null)
             {
@@ -65,14 +85,13 @@ namespace WebAppShares.Pages.Catalog
                 EndPage = 1;
                 return;
             }
-
             Products = products.ToList();
 
-            int skip = (page.Value - 1) * PageSize;
+            int skip = (page - 1) * PageSize;
             var productSubset = Products.Skip(skip).Take(PageSize).ToList();
 
             int totalPages = (int)Math.Ceiling((decimal)Products.Count / PageSize);
-            int currentPage = page.Value;
+            int currentPage = page;
 
             int startPage = currentPage - 5;
             int endPage = currentPage + 4;

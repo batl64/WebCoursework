@@ -3,6 +3,7 @@
 @addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
 @addTagHelper *, WebAppShares
 @{
+    var filter = Model.filter; 
 }
 
 <!DOCTYPE html>
@@ -71,22 +72,22 @@
                                 @if ((int)ViewData["CurrentPage"] > 1)
                                 {
                                     <li class="page-item">
-                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="1">Перша</a>
+                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="1" asp-route-filter="@filter">Перша</a>
                                     </li>
-                                    <li> <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]-1)">Минула</a></li>
+                                    <li> <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]-1)" asp-route-filter="@filter">Минула</a></li>
                                 }
                                 @for (var pge = ((int)ViewData["StartPage"]); pge <= ((int)ViewData["EndPage"]); pge++)
                                 {
                                     <li class="page-item @(pge == (int)ViewData["CurrentPage"]? "active":"")">
-                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@pge">@pge</a>
+                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@pge" asp-route-filter="@filter">@pge</a>
                                     </li>
                                 }
                                 @if ((int)ViewData["CurrentPage"] < (int)ViewData["TotalPages"])
                                 {
                                     <li class="page-item">
-                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]+1)">Наступний</a>
+                                        <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"]+1)" asp-route-filter="@filter">Наступний</a>
                                     </li>
-                                    <li> <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"])">Минула</a></li>
+                                    <li> <a class="page-link" asp-controller="Catalog" asp-action="Index" asp-route-page="@((int)ViewData["CurrentPage"])" asp-route-filter="@filter">Минула</a></li>
                                 }
 
                             </ul>
