@@ -20,7 +20,7 @@ builder.Configuration
     .SetBasePath(Directory.GetCurrentDirectory())
     .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
     .AddJsonFile($"appsettings.{builder.Environment.EnvironmentName}.json", optional: true, reloadOnChange: true)
-    .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true) 
+    .AddJsonFile("appsettings.Local.json", optional: true, reloadOnChange: true)
     .AddEnvironmentVariables();
 
 var connectionString = builder.Configuration.GetConnectionString("DefaultConnection") ?? throw new InvalidOperationException("Connection string 'DefaultConnection' not found.");
@@ -35,6 +35,9 @@ builder.Services.AddRazorPages();
 
 builder.Services.AddTransient<IEmailSender, EmailSender>();
 builder.Services.AddScoped<IProductService, ProductService>();
+builder.Services.AddTransient<ExcelReportGenerator.ExcelReportGenerator>();
+builder.Services.AddTransient<WordReportGenerator.WordReportGenerator>();
+
 
 builder.Services.AddAuthorization(opt => { 
     opt.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin")); 

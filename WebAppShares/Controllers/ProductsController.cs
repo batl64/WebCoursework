@@ -40,7 +40,7 @@ namespace WebAppShares.Controllers
 
         public override async Task<IActionResult> Index(string SearchText="",int page=1)
         {
-            List<ProductsModel> prod = await _context.Products.Include(x => x.Image).OrderByDescending(x => x.Id).ToListAsync(); ;
+            List<ProductsModel> prod = await _context.Products.Include(x => x.Image).OrderByDescending(x => x.Id).ToListAsync(); 
             List<ProductsModel> product;
             if (SearchText != "" && SearchText != null)
             {
